@@ -1,0 +1,8 @@
+{
+    "name": "lilylagrange00's Extensions",
+    "description": "Test repo",
+    "manifestVersion": 1,
+    "pluginLists": [
+      "https://raw.githubusercontent.com/lilylagrange00/TestPlugins/builds/plugins.json"
+    ]
+  }
