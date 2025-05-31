@@ -1,0 +1,8 @@
+{
+  "name": "<repository name>",
+  "description": "<repository description>",
+  "manifestVersion": 1,
+  "pluginLists": [
+    "https://raw.githubusercontent.com/lilylagrange00/TestPlugins/refs/heads/builds/plugins.json"
+  ]
+}
