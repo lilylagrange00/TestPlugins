@@ -2,9 +2,10 @@ package com.example
 
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.Qualities
 
 class ExampleProvider : MainAPI() {
-    override var mainUrl = "https://example.com/"
+    override var mainUrl = "https://example.com"
     override var name = "Example Provider"
     override var lang = "en"
     override val supportedTypes = setOf(TvType.Movie)
@@ -30,7 +31,8 @@ class ExampleProvider : MainAPI() {
         return newMovieLoadResponse(
             name = "CrossPlatform Test Movie",
             url = url,
-            dataUrl = url
+            dataUrl = url,
+            type = TvType.Movie
         ) {
             posterUrl = "$mainUrl/images/test-movie.jpg"
             year = 2025
@@ -47,12 +49,12 @@ class ExampleProvider : MainAPI() {
     ): Boolean {
         // Dummy link for testing
         callback(
-            ExtractorLink(
+            newExtractorLink(
                 source = name,
                 name = "Test Stream",
                 url = "https://example.com/stream/test.mp4",
                 referer = mainUrl,
-                quality = Qualities.P1080.value,
+                quality = Qualities.P1080,
                 isM3u8 = false
             )
         )
