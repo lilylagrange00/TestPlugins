@@ -47,16 +47,17 @@ class ExampleProvider : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        // Dummy link for testing
         callback(
             newExtractorLink(
                 source = name,
                 name = "Test Stream",
-                url = "https://example.com/stream/test.mp4",
-                referer = mainUrl,
-                quality = Qualities.P1080,
+                url = "https://example.com/stream/test.mp4"
+            ) {
+                // set extra fields inside the initializer block
+                referer = mainUrl
+                quality = Qualities.P1080
                 isM3u8 = false
-            )
+            }
         )
         return true
     }
