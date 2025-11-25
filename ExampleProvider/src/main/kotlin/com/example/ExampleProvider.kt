@@ -8,7 +8,6 @@ import com.lagradost.cloudstream3.newMovieSearchResponse
 class ExampleProvider : MainAPI() {
     override var mainUrl = "https://example.com/"
     override var name = "Example Provider"
-    override var lang = "en"
     override val supportedTypes = setOf(TvType.Movie)
     override val hasMainPage = false
 
