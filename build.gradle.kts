@@ -89,3 +89,51 @@ subprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
+tasks.register("makeAndPushAll") {
+    // build all plugin subprojects + global plugins.json
+    subprojects.forEach { subproj ->
+        dependsOn("${subproj.path}:make")
+    }
+    dependsOn("makePluginsJson")
+
+    doLast {
+        // ensure builds folder exists
+        val buildsDir = file("$projectDir/builds")
+        buildsDir.mkdirs()
+
+        // copy all .cs3 files from subprojects
+        subprojects.forEach { subproj ->
+            val cs3Dir = file("${subproj.projectDir}/build")
+            if (cs3Dir.exists()) {
+                cs3Dir.listFiles { f -> f.extension == "cs3" }?.forEach { cs3 ->
+                    copy {
+                        from(cs3)
+                        into(buildsDir)
+                    }
+                }
+            }
+        }
+
+        // copy plugins.json from root build
+        val pluginsJson = file("$projectDir/build/plugins.json")
+        if (pluginsJson.exists()) {
+            copy {
+                from(pluginsJson)
+                into(buildsDir)
+            }
+        }
+
+        // stage only the builds folder
+        project.exec {
+            commandLine("git", "add", "builds")
+        }
+        // commit only if there are staged changes
+        project.exec {
+            commandLine("git", "commit", "-m", "Local build ${java.time.Instant.now()}")
+        }
+        // push to remote builds branch
+        project.exec {
+            commandLine("git", "push", "origin", "HEAD:builds", "--force")
+        }
+    }
+}
