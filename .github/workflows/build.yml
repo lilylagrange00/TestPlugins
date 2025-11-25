@@ -9,8 +9,9 @@ on:
   push:
     branches:
       # choose your default branch
-      - master
-      - main
+      - no-such-branch
+      #- master
+      #- main
     paths-ignore:
       - '*.md'
 
