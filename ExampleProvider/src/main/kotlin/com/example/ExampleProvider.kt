@@ -18,7 +18,6 @@ class ExampleProvider : MainAPI() {
                     name = "CrossPlatform Test Movie",
                     url = "$mainUrl/test-movie"
                 ) {
-                    this.apiName = name
                     this.type = TvType.Movie
                 }
             )
