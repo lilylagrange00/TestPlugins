@@ -91,18 +91,23 @@ tasks.register<Delete>("clean") {
 }
 tasks.register("makeAndPushAll") {
     group = "publishing"
-    description = "Build plugins, collect artifacts, and push them to the builds branch"
+    description = "Build plugins and push artifacts to builds branch"
 
-    // Run all plugin subprojects + global plugins.json
-    subprojects.forEach { subproj ->
-        dependsOn("${subproj.path}:make")
-    }
+    subprojects.forEach { dependsOn("${it.path}:make") }
     dependsOn("makePluginsJson")
 
     doLast {
-        // Ensure builds folder exists
         val buildsDir = file("$projectDir/builds")
         buildsDir.mkdirs()
+
+        // Copy plugins.json
+        val pluginsJson = file("$projectDir/build/plugins.json")
+        if (pluginsJson.exists()) {
+            copy {
+                from(pluginsJson)
+                into(buildsDir)
+            }
+        }
 
         // Copy all .cs3 files from subprojects
         subprojects.forEach { subproj ->
@@ -117,39 +122,27 @@ tasks.register("makeAndPushAll") {
             }
         }
 
-        // Copy plugins.json from root build
-        val pluginsJson = file("$projectDir/build/plugins.json")
-        if (pluginsJson.exists()) {
-            copy {
-                from(pluginsJson)
-                into(buildsDir)
-            }
-        }
-
-        // Switch to builds branch before committing
+        // Git commands run inside the builds worktree
         exec {
-            commandLine("git", "checkout", "builds")
+            workingDir = buildsDir
+            commandLine("git", "config", "user.email", "actions@github.com")
         }
-
-        // Stage only the builds folder
         exec {
-            commandLine("git", "add", "builds")
+            workingDir = buildsDir
+            commandLine("git", "config", "user.name", "GitHub Actions")
         }
-
-        // Commit only if there are staged changes
         exec {
-            commandLine("git", "commit", "-m", "Local build ${java.time.Instant.now()}")
-            isIgnoreExitValue = true // don’t fail if nothing new to commit
+            workingDir = buildsDir
+            commandLine("git", "add", ".")
         }
-
-        // Push to remote builds branch
         exec {
+            workingDir = buildsDir
+            commandLine("git", "commit", "--amend", "-m", "Local build ${java.time.Instant.now()}")
+            isIgnoreExitValue = true
+        }
+        exec {
+            workingDir = buildsDir
             commandLine("git", "push", "origin", "builds", "--force")
-        }
-
-        // Switch back to master/main for development
-        exec {
-            commandLine("git", "checkout", "master")
         }
     }
 }
