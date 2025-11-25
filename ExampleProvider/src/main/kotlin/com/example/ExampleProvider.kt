@@ -53,7 +53,7 @@ class ExampleProvider : MainAPI() {
                 source = name,
                 name = "Test Stream",
                 url = "https://example.com/stream/test.mp4"
-                type = ExtractorLinkType.DIRECT
+                //type = ExtractorLinkType.
             ) {
                 // set extra fields inside the initializer block
                 referer = mainUrl
