@@ -89,3 +89,67 @@ subprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
+tasks.register("makeAndPushAll") {
+    group = "publishing"
+    description = "Build plugins, collect artifacts, and push them to the builds branch"
+
+    // Run all plugin subprojects + global plugins.json
+    subprojects.forEach { subproj ->
+        dependsOn("${subproj.path}:make")
+    }
+    dependsOn("makePluginsJson")
+
+    doLast {
+        // Ensure builds folder exists
+        val buildsDir = file("$projectDir/builds")
+        buildsDir.mkdirs()
+
+        // Copy all .cs3 files from subprojects
+        subprojects.forEach { subproj ->
+            val cs3Dir = file("${subproj.projectDir}/build")
+            if (cs3Dir.exists()) {
+                cs3Dir.listFiles { f -> f.extension == "cs3" }?.forEach { cs3 ->
+                    copy {
+                        from(cs3)
+                        into(buildsDir)
+                    }
+                }
+            }
+        }
+
+        // Copy plugins.json from root build
+        val pluginsJson = file("$projectDir/build/plugins.json")
+        if (pluginsJson.exists()) {
+            copy {
+                from(pluginsJson)
+                into(buildsDir)
+            }
+        }
+
+        // Switch to builds branch before committing
+        exec {
+            commandLine("git", "checkout", "builds")
+        }
+
+        // Stage only the builds folder
+        exec {
+            commandLine("git", "add", "builds")
+        }
+
+        // Commit only if there are staged changes
+        exec {
+            commandLine("git", "commit", "-m", "Local build ${java.time.Instant.now()}")
+            isIgnoreExitValue = true // don’t fail if nothing new to commit
+        }
+
+        // Push to remote builds branch
+        exec {
+            commandLine("git", "push", "origin", "builds", "--force")
+        }
+
+        // Switch back to master/main for development
+        exec {
+            commandLine("git", "checkout", "master")
+        }
+    }
+}
