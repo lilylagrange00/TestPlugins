@@ -2,6 +2,7 @@ package com.example
 
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.ExtractorLinkType
 import com.lagradost.cloudstream3.utils.Qualities
 import com.lagradost.cloudstream3.utils.newExtractorLink
 class ExampleProvider : MainAPI() {
@@ -52,11 +53,11 @@ class ExampleProvider : MainAPI() {
                 source = name,
                 name = "Test Stream",
                 url = "https://example.com/stream/test.mp4"
+                type = ExtractorLinkType.DIRECT
             ) {
                 // set extra fields inside the initializer block
                 referer = mainUrl
-                quality = Qualities.P1080
-                isM3u8 = false
+                quality = Qualities.P1080.value
             }
         )
         return true
