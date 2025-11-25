@@ -21,6 +21,7 @@ class ExampleProvider : MainAPI() {
                     url = "$mainUrl/test-movie"
                 ) {
                     type = TvType.Movie
+                posterUrl = "https://peach.blender.org/wp-content/uploads/poster_bunny_big.jpg"
                 }
             )
         }
