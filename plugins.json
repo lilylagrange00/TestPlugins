@@ -1,8 +1,10 @@
 [
     {
         "iconUrl": "https://www.google.com/s2/favicons?domain=animepahe.ru/&sz=%size%",
+        "fileHash": "sha256-1265151c3d59a1ac8dbfbfb405e600a8025b48f5584e12b7667c7e94a84a000f",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/user/repo",
+        "repositoryUrl": "https://github.com/lilylagrange00/TestPlugins",
+        "fileSize": 40351,
         "status": 1,
         "language": "en",
         "authors": [
@@ -13,10 +15,10 @@
             "Anime",
             "OVA"
         ],
-        "version": 1,
+        "version": 248,
         "internalName": "ExampleProvider",
         "description": "Animes (SUB/DUB)",
-        "url": "https://raw.githubusercontent.com/user/repo/builds/ExampleProvider.cs3",
+        "url": "https://raw.githubusercontent.com/lilylagrange00/TestPlugins/builds/ExampleProvider.cs3",
         "name": "ExampleProvider"
     }
 ]
