@@ -24,5 +24,5 @@ cloudstream {
     )
     iconUrl = "https://www.google.com/s2/favicons?domain=animepahe.ru/&sz=%size%"
 
-    isCrossPlatform = true
+    isCrossPlatform = false
 }
