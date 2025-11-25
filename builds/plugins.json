@@ -1,0 +1,22 @@
+[
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=animepahe.ru/&sz=%size%",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/user/repo",
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "Lorem,Lorem Ipsum,"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 1,
+        "internalName": "ExampleProvider",
+        "description": "Animes (SUB/DUB)",
+        "url": "https://raw.githubusercontent.com/user/repo/builds/ExampleProvider.cs3",
+        "name": "ExampleProvider"
+    }
+]
