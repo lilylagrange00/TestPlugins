@@ -35,9 +35,10 @@ class ExampleProvider : MainAPI() {
             dataUrl = url,
             type = TvType.Movie
         ) {
-            posterUrl = "$mainUrl/images/test-movie.jpg"
+            //posterUrl = "$mainUrl/images/test-movie.jpg"
+            posterUrl = "https://peach.blender.org/wp-content/uploads/poster_bunny_big.jpg"
             year = 2025
-            plot = "This is a dummy movie provided by ExampleProvider for testing."
+            plot = "This is a dummy movie provided by  Blender Foundation | www.blender.org for testing."
         }
     }
 
@@ -52,7 +53,7 @@ class ExampleProvider : MainAPI() {
             newExtractorLink(
                 source = name,
                 name = "Test Stream",
-                url = "https://example.com/stream/test.mp4"
+                url = "https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4"
                 //type = ExtractorLinkType.
             ) {
                 // set extra fields inside the initializer block
