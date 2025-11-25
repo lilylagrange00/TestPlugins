@@ -12,9 +12,9 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:8.7.3")
+        classpath("com.android.tools.build:gradle:8.13.0")
         // Cloudstream gradle plugin which makes everything work and builds plugins
-        classpath("com.github.recloudstream:gradle:-SNAPSHOT")
+        classpath("com.github.recloudstream:gradle:master-SNAPSHOT")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0")
     }
 }
@@ -78,8 +78,8 @@ subprojects {
         // but you don't need to include any of them if you don't need them.
         // https://github.com/recloudstream/cloudstream/blob/master/app/build.gradle.kts
         implementation(kotlin("stdlib")) // Adds Standard Kotlin Features
-        implementation("com.github.Blatzar:NiceHttp:0.4.11") // HTTP Lib
-        implementation("org.jsoup:jsoup:1.18.3") // HTML Parser
+        implementation("com.github.Blatzar:NiceHttp:0.4.13") // HTTP Lib
+        implementation("org.jsoup:jsoup:1.21.2") // HTML Parser
         // IMPORTANT: Do not bump Jackson above 2.13.1, as newer versions will
         // break compatibility on older Android devices.
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1") // JSON Parser
