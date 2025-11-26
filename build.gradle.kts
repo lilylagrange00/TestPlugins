@@ -38,7 +38,20 @@ subprojects {
 
     cloudstream {
         // when running through github workflow, GITHUB_REPOSITORY should contain current repository name
-        setRepo(System.getenv("GITHUB_REPOSITORY") ?: "user/repo")
+        val repoName = System.getenv("GITHUB_REPOSITORY") ?: run {
+            val remoteUrl = Runtime.getRuntime().exec("git config --get remote.origin.url")
+                .inputStream.bufferedReader().readText().trim()
+
+            when {
+                remoteUrl.startsWith("git@") ->
+                    remoteUrl.substringAfter(":").removeSuffix(".git")
+                remoteUrl.startsWith("https://") ->
+                    remoteUrl.substringAfter("github.com/").removeSuffix(".git")
+                else -> "user/repo"
+            }
+        }
+
+        setRepo(repoName)
     }
 
     android {
